@@ -1,5 +1,7 @@
 # Writeup of Chutes-and-ladders challenge from DiceCTF 2022
 
+TDLR: UAF to tcache poisoning using a game
+
 Writeup author: [adamd](https://adamdoupe.com)
 
 The challenge description given by challenge author `bosh` is the following:

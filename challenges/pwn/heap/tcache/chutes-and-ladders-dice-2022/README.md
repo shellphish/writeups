@@ -1,6 +1,6 @@
 # Writeup of Chutes-and-ladders challenge from DiceCTF 2022
 
-TDLR: UAF to tcache poisoning using a game
+TDLR: UAF to tcache poisoning using a game. libc 2.31 (no key leak needed).
 
 Writeup author: [adamd](https://adamdoupe.com)
 

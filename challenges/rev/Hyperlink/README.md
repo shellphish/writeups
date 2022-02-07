@@ -46,7 +46,33 @@ values for each character were **incredibly** similar. I decided to write a scri
 at a time and look at the binary. The very strange thing I noticed was that only one character produced a
 different binary string than the others. I built off my script and wrote it so that starting at any given prefix,
 which I set to ``dice{`` as the start becuase I knew it would be the flag, the script would look for the character
-that produced a new result, and then append it to the prefix an repeat. This worked... kind of.
+that produced a new result, and then append it to the prefix an repeat. The full script is in the repository,
+but here is the function that actually checks for unique binary:
+```python
+def branch(prefix):
+    while len(prefix) < 34:
+        counts = {}
+        results = {}
+        letters = []
+        for char in alphabet:
+            chain1 = prefix + char + '}'
+            links = [data['links'][c] for c in chain1]
+            res = bin(chain(links, data['start']))[2:].rjust(164, '0')
+            results[char] = res
+            if res not in counts:
+                counts[res] = 1
+            else:
+                counts[res] += 1
+        #print(counts)
+        keys = [k for k, v in counts.items() if v == 1]
+        try:
+            letter = [k for k, v in results.items() if v == keys[0]]
+            prefix += letter[0]
+        except IndexError:
+            prefix += '_'
+    print(prefix + '}')
+```
+This worked... kind of.
 
 I supplied ``dice{`` and got back ``dice{evera`` I looked like it was giving some part of the flag. I messed around
 with bruteforcing ``prefix`` possiblilities and got a few flag leaks. Below are the most notable:

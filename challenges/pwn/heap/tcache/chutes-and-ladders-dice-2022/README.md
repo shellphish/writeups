@@ -16,14 +16,14 @@ After the CTF I created a quick [Dockerfile](./Dockerfile) so that others can ru
 
 Build it run it locally with the following:
 
-```
+```bash
 docker build . -t chutes
 docker run --rm -p 31326:31326 -it chutes
 ```
 
 Now you should be able to access the challenge:
 
-```
+```bash
 nc localhost 31326
 ```
 
@@ -34,7 +34,7 @@ Now get to hacking! Only read on if you want the spoilers.
 First thing I did was create a patched version of `chutes` so that I could run/debug locally using the correct libc and ld.
 You should always do this when they give you a libc to ensure that you're debugging the same local/remote.
 
-```
+```bash
 cp ./chutes ./chutes-patched
 patchelf --set-rpath "." ./chutes-patched
 patchelf --set-interpreter "./ld-linux-x86-64.so.2" ./chutes-patched
@@ -42,7 +42,7 @@ patchelf --set-interpreter "./ld-linux-x86-64.so.2" ./chutes-patched
 
 Next, use pwntools' `checksec` to see what pwn defenses are in place.
 
-```
+```bash
 $ checksec ./chutes
 [*] 'chutes'
     Arch:     amd64-64-little
@@ -99,7 +99,7 @@ If we "win" the game we get a libc leak of `&puts`. Looking into `win_check_mayb
 
 This is clearly nice so that we don't need to leak the libc pointer (although we could do it without it would be tedious). 
 
-```
+```C
   while ( 1 )
   {
     print_board();
@@ -119,7 +119,7 @@ This is clearly nice so that we don't need to leak the libc pointer (although we
 
 I also figured out the following structs that the program used:
 
-```
+```C
 struct player
 {
    char* marker;

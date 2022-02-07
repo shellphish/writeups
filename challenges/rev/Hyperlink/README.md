@@ -2,6 +2,9 @@
 ## Description
 I made a really fun game! Can you link up the chain to reach the destination?
 
+## Summary:
+Use python to leak flag results from the json, then piece together the leaks to collect form the flag.
+
 ## Solution
 I started by opening up the attached ``.json`` file. It looked really confusing at first but
 after looking at it for a bit I made some key observations. The data structure primarily built

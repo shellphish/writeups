@@ -12,6 +12,10 @@ nc mc.ax 31131
 ```
 Attached to the challenge was a single file, [index.js](./index.js).
 
+# Summary
+
+This challenge involves sending a JavaScript payload to obtain access to Node modules through built-in Node mechanics.
+
 # Understanding index.js
 
 The first thing I did was simply just read the contents of the `index.js` file and try and understand what it does. It removes almost all global variables, and undefines the function constructor field. The only global variables left are the `console` object and the `eval` function. After undefining everything, the script runs `eval` on arbitrary code sent through `nc`.

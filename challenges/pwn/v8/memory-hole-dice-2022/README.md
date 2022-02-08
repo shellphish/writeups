@@ -8,6 +8,9 @@ tags:
 - v8
 ---
 
+# Summary
+Escape from V8 Virtual Memory Cage with `imported_mutable_global`.
+
 # Introduction
 During this weekend, I casually played DiceCTF 2022 with my team Shellphish. And I solved two challenges: `baby-rop` and `memory hole` during the game.
 

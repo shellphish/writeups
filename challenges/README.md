@@ -6,6 +6,10 @@
 
 - [rev](./rev) 
     - [json](./rev/json): JSON file manipulation
+    - [golang](./rev/golang): Mostly reversing Go stuff
+
+- [crypto](./crypto)
+    - [ECC](./crypto/ECC): Eliptic Curve Crypto
 
 ## Organization
 Instead of grouping things by CTF or year, let's group things by concept and topic.

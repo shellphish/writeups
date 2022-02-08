@@ -335,8 +335,68 @@ We now can construct our 5-letter string:
 ```
 
 # Flag Part 2
+(Solved by ashwin.sudhir)
 
-// I didn't solve this!
+In this part the user input is shuffled around a but which makes it a little harder to follow but is easy to solve using the browser debugger, since we can directly set breakpoints in the WebAssembly and see what our input is being compared to at the end.
+Just make sure that all the characters in the input are unique so you can keep a track of the location of the of the characters.
+
+The second part of the flag is actually evaluated inside of the `guess` function:
+```js
+export function guess(a:int, b:int):int {
+  var c:int = g_a - 16;
+  g_a = c;
+  var d:int = 2;
+  if (f_k(b) != 5) goto B_a;
+  if (eqz(streq(b, 1024))) goto B_b;
+  d = a != 1;
+  goto B_a;
+  label B_b:
+  var e:int = b[4]:ubyte;
+  d = b[3]:ubyte;
+  var f:int = b[2]:ubyte;
+  var g:int = b[1]:ubyte;
+  c[11]:byte = b[0]:ubyte;
+  c[10]:byte = g;
+  c[9]:byte = f;
+  c[8]:byte = d;
+  d = c[10]:ubyte;
+  c[10]:byte = c[9]:ubyte;
+  c[9]:byte = d;
+  d = c[9]:ubyte;
+  c[9]:byte = c[8]:ubyte;
+  c[8]:byte = d;
+  d = c[9]:ubyte;
+  c[9]:byte = c[11]:ubyte;
+  c[11]:byte = d;
+  d = c[9]:ubyte;
+  c[9]:byte = c[8]:ubyte;
+  c[8]:byte = d;
+  d = c[11]:ubyte;
+  c[11]:byte = c[10]:ubyte;
+  c[10]:byte = d;
+  if (c[11]:ubyte != 51) goto B_c;
+  if (c[10]:ubyte != 108) goto B_c;
+  if (c[9]:ubyte != 33) goto B_c;
+  d = c[8]:ubyte;
+  if ((e & 255) != 68) goto B_c;
+  if ((d & 255) != 70) goto B_c;
+  ...
+}
+```
+You can see the `if` statements at the end of this function snippet. After following through what the values are, we can determine:
+```
+a = 70
+b = 33
+c = 51
+d = 108
+e = 68
+```
+Evaluating the string:
+```js
+> String.fromCharCode(70, 33, 51, 108, 68)
+'F!3lD'
+```
+We now know that Part 2 is `F!3lD`.
 
 # Wrapping Up
 

@@ -4,8 +4,6 @@
 
 The challenge asks for the flag as an input. It performs a series of reversible transformation on each byte and compares it with a hardcoded value in the binary. My solution is to collect a trace of the reversible operations and write a script to transform the hardcoded output back to its input. I used only ghidra and gdb to solve the challenge. 
 
-## Challenge
-
 ## Solution
 
 ### Reversing initialization routine. 

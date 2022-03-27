@@ -1,4 +1,4 @@
-
+# Chirashi-Sushi
 
 ## Summary
 
@@ -14,7 +14,7 @@ I started by reversing the main function. The beginning of the main function loo
 
 Let's look at one of the initialization functions  
 
-```
+```C
 int main() {
   ...
   local_94 = local_868;
@@ -29,7 +29,7 @@ int main() {
 ```
 Those hardcoded hex numbers looked interesting to me, and in fact if you scan through main function, the numbers 0xfa1e0ff3 and 0xbb49 appears repeatedly! Let's take a look at the function `f_X5f628f`:
 
-```
+```C
 void f_X5f628f(code *param_1) {
   ...
   local_18 = &stack0x00000008;
@@ -48,7 +48,6 @@ void f_X5f628f(code *param_1) {
 Ahh so `local_a4` is meant to be interpreted as a function, which means those funny looking hex numbers are assembly! If we disassemble those funny hex numbers in the main function, we get:
 
 ```
-
 # assembly in local_a4 in main
 f3 0f 1e fa                 ENDBR64
 49 bb <g_0.2562>            movabs r11, g_0.2562
@@ -65,7 +64,7 @@ f3 0f 1e fa                 ENDBR64
 
 Let's continue to take a look at `f.2547` and `g_0.2562`:
 
-```
+```C
 undefined8 * f.2547(void)
 
 {
@@ -113,7 +112,7 @@ From here I see two things:
 
 With these two hypothesis in mind, I created a structure of size 0x1c0 in `local_868`, and assumed all the fields in `local_868` to be pointers. And here is what I got
 
-```
+```C
 int main() {
   *local_868.field_0xf8 = 0x3b9aca07;
   *local_868.field_0x118 = (long)f_Xcefe37;
@@ -212,7 +211,7 @@ pwndbg> x/56gx $rbp-0x860
 
 All the fields in the `local_868` structure are simply aliases to the same 6 memory addresses! So I proceeded to map all the fields to their corresponding addresses, and got this much nicer looking decompilation 
 
-```
+```C
 int main() {
   ...
   *addr_406068 = 0x3b9aca07;
@@ -273,7 +272,7 @@ Here's what I see from this decompilation:
 
 The global variables are essentially used to create a state machine, and the good thing about it is that the global variables are completely independent of the input. Moreover, all the operations on the input bytes are completely reversible, meaning that if we can recreate a trace of the state machine, we can reverse the trace and obtain the original inputs back from its outputs. Lucky for us, the outputs are also hardcoded in the main function 
 
-```
+```C
   output._0_8_ = 0x97d54fbb1a8b7e3b;
   output._8_8_ = 0x87fd66cbcfbe80a5;
   output._16_8_ = 0xe80de41a07115875;
@@ -290,14 +289,14 @@ The global variables are essentially used to create a state machine, and the goo
 
 This part is not too difficult. We can use the above pseudo code to recreate the logic in Python. I'll admit that I do not know what these two lines do
 
-```
+```C
     lVar4 = SUB168(ZEXT816(uVar1) * ZEXT816(0x5c9882b931057263) >> 0x40,0);
     iVar3 = (int)uVar1 + (int)((uVar1 - lVar4 >> 1) + lVar4 >> 5) * -0x2f;
 ```
 
 My best guess is that this is some division optimization that turns the division into a multiplication, but I ended up recreating the logic line by line base on the assembly. 
 
-However, once I ran my python script, I realize that it is taking way tooo long, to the point where I thought my program hanged. I tried to create a gdb tracer and the result is still the same. So I ended up converting everything to C and ran that script. Luckily, trace.c ran within one minute, and I got a trace that is 5GB long! I reversed the trace, pass it through soln.c, which is meant to reverse all the operations in trace.c, and obtained the flag in the end. 
+However, once I ran my python script (poc.py), I realize that it is taking way tooo long, to the point where I thought my program hanged. I tried to create a gdb tracer and the result is still the same. So I ended up converting everything to C (trace.c) and ran that script. Luckily, trace.c ran within one minute, and I got a trace that is 5GB long! I reversed the trace, pass it through soln.c, which is meant to reverse all the operations in trace.c, and obtained the flag in the end. 
 
 
 ## Flag

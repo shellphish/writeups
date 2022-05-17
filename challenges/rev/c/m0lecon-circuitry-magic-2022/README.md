@@ -1,6 +1,6 @@
 # Writeup of circuitry-magic challenge from M0leCon CTF 2022
 
-TLDR: Given arbitrary heap write (8-bytes), followed by a malloc and read 8-bytes: overwrite a tcache entry to change `got` of `exit`.
+TLDR: Extract logic from binary, create symbolic constraints, then guess the correct flag.
 
 Writeup author: [adamd](https://adamdoupe.com)
 

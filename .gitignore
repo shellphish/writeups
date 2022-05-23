@@ -1,0 +1,11 @@
+## Common Junk
+### Resource Forks
+*.DS_Store
+
+[Tt]humbs.db
+
+### Office
+~$*
+
+### Subversion
+.svn

@@ -3,7 +3,7 @@ author: [mahaloz (Zion Basque)](https://mahaloz.re)
 ctf: 0CTF22
 
 ## Summary 
-Reversing a ROM from the Vectrex gaming system. The architecture was Motorolla 6809 (m68k). The game implements a flawed byte-by-byte authenticator and encryption using RC5. This involves game-hacking, VIDE, and watching memory. 
+Reversing a ROM from the Vectrex gaming system. The architecture was Motorolla 6809 (m6809). The game implements a flawed byte-by-byte authenticator and encryption using RC5. This involves game-hacking, VIDE, and watching memory. 
 
 
 ## Writeup

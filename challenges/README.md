@@ -7,7 +7,7 @@
 - [rev](./rev) 
     - [json](./rev/json): JSON file manipulation
     - [golang](./rev/golang): Mostly reversing Go stuff
-    - [m68k](./rev/m68k): Reversing Motorolla 68k arch
+    - [motorolla](./rev/motorolla): Reversing Motorolla variant archs 
 
 - [crypto](./crypto)
     - [ECC](./crypto/ECC): Eliptic Curve Crypto

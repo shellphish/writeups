@@ -19,11 +19,11 @@ game.bin: Vectrex ROM image: "VECTOR_GAME\200"
 Seeing as it does, our introduction begins with a completely foreign device and architecture. 
 
 # The Vectrex Console
-In times like these, it's always best to start with Wikipedia--it tends to be a great source of general knowledge for tech people. The [Vectrex](https://en.wikipedia.org/wiki/Vectrex#Technical_specifications) page already tells us the most important thing: that the console's circuit board, i.e., it's architecture, is a [Motorola 6809](https://en.wikipedia.org/wiki/Motorola_6809). I've heard other CTFers refer to this arch as m68k. 
+In times like these, it's always best to start with Wikipedia--it tends to be a great source of general knowledge for tech people. The [Vectrex](https://en.wikipedia.org/wiki/Vectrex#Technical_specifications) page already tells us the most important thing: that the console's circuit board, i.e., it's architecture, is a [Motorola 6809](https://en.wikipedia.org/wiki/Motorola_6809). I've heard other CTFers refer to this arch as m6809. 
 
 ![]({{ site.baseurl }}/assets/images/0ctf22-rev/pic0.jpg)
 
-m68k, in this case, is an 8bit architecture that supports some 16bit operations, which means we will likely only ever be dealing with 1 byte at a time. Mixed 8 and 16 bit operations are like [ARM Thumb Mode](https://stackoverflow.com/questions/10638130/what-is-the-arm-thumb-instruction-set). The game we're given is essentially a program (ROM) for this system which is full of m68k instructions wrapped by some assets and loading information. 
+m6809, in this case, is an 8bit architecture that supports some 16bit operations, which means we will likely only ever be dealing with 1 byte at a time. Mixed 8 and 16 bit operations are like [ARM Thumb Mode](https://stackoverflow.com/questions/10638130/what-is-the-arm-thumb-instruction-set). The game we're given is essentially a program (ROM) for this system which is full of m68k instructions wrapped by some assets and loading information. 
 
 # Reversing Questions
 Understanding the very basics of this program is essential, but it still leaves a lot of questions. These questions are usually the same questions I ask whenever reversing something not mainstream. Most of them are inspired by my mentor [@fish](https://ruoyuwang.me/).
@@ -57,7 +57,7 @@ When running the game, as shown in the IDE picture, it simply asks for a passwor
 
 Answer 1 is tricky because we can only debug this program once it is being emulated, which makes it extremely hard to detect changes in time when verifying something like `AAAAAAAA` and `BAAAAAAA`. Instead, we keep #2 in mind. 
 
-We will be using IDA for static analysis, but you should be able to do this in Ghidra or Binja. For IDA, we need to manually mark the start of the code section because IDA has no knowledge of this binary format; however, it does understand m68k instructions. In IDA, going to the EP we discovered earlier, `0x1e`, typing `C` while over it, we get disassembled instructions with general function boundary guesses from IDA. 
+We will be using IDA for static analysis, but you should be able to do this in Ghidra or Binja. For IDA, we need to manually mark the start of the code section because IDA has no knowledge of this binary format; however, it does understand m6809 instructions. In IDA, going to the EP we discovered earlier, `0x1e`, typing `C` while over it, we get disassembled instructions with general function boundary guesses from IDA. 
 
 We are left with the following functions:
 ```c
